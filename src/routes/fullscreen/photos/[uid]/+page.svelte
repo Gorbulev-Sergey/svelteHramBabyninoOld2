@@ -54,51 +54,53 @@
 	});
 </script>
 
-<button
-	class="btn btn-light text-dark bg-light border-0 bg-opacity-75 position-absolute m-3"
-	style="z-index: 1000; left:0; top:0"
-	title="Скачать фотографию"
-	on:click={downloadImage(album.photos[activeImage].url, activeImage)}>
-	<i class="fa-solid fa-download" />
-</button>
-<button
-	class="btn btn-light text-dark bg-light border-0 bg-opacity-75 position-absolute m-3"
-	style="z-index: 1000; right:0; top:0"
-	title="Закрыть"
-	on:click={goBack}>
-	<i class="fa-solid fa-xmark" />
-</button>
-<div id="carouselExample" class="carousel slide" data-bs-ride="false">
-	{#if album.photos.length > 1}
-		<div class="carousel-indicators">
+{#if album.title}
+	<button
+		class="btn btn-light text-dark bg-light border-0 bg-opacity-75 position-absolute m-3"
+		style="z-index: 1000; left:0; top:0"
+		title="Скачать фотографию"
+		on:click={downloadImage(album.photos[activeImage].url, activeImage)}>
+		<i class="fa-solid fa-download" />
+	</button>
+	<button
+		class="btn btn-light text-dark bg-light border-0 bg-opacity-75 position-absolute m-3"
+		style="z-index: 1000; right:0; top:0"
+		title="Закрыть"
+		on:click={goBack}>
+		<i class="fa-solid fa-xmark" />
+	</button>
+	<div id="carouselExample" class="carousel slide" data-bs-ride="false">
+		{#if album.photos.length > 1}
+			<div class="carousel-indicators">
+				{#each album.photos as photo, i}
+					<button data-bs-target="#carouselExample" class={i == activeImage ? 'active' : ''} data-bs-slide-to={i.toString()} />
+				{/each}
+			</div>
+		{/if}
+		<div class="carousel-inner">
 			{#each album.photos as photo, i}
-				<button data-bs-target="#carouselExample" class={i == activeImage ? 'active' : ''} data-bs-slide-to={i.toString()} />
+				<div class="carousel-item {i == 0 ? 'active' : ''}">
+					<div
+						class="img-fluid h-100"
+						style="background-image: url({photo.url});
+							background-repeat: no-repeat; background-position: center; background-size: contain; min-height:100vh;" />
+					{#if photo.title}
+						<div class="carousel-caption d-none d-md-block mb-2">
+							{photo.title}
+						</div>
+					{/if}
+				</div>
 			{/each}
 		</div>
-	{/if}
-	<div class="carousel-inner">
-		{#each album.photos as photo, i}
-			<div class="carousel-item {i == 0 ? 'active' : ''}">
-				<div
-					class="img-fluid h-100"
-					style="background-image: url({photo.url});
-							background-repeat: no-repeat; background-position: center; background-size: contain; min-height:100vh;" />
-				{#if photo.title}
-					<div class="carousel-caption d-none d-md-block mb-2">
-						{photo.title}
-					</div>
-				{/if}
-			</div>
-		{/each}
+		{#if album.photos.length > 1}
+			<button class="carousel-control-prev" data-bs-target="#carouselExample" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" />
+				<span class="visually-hidden">Предыдущий</span>
+			</button>
+			<button class="carousel-control-next" data-bs-target="#carouselExample" data-bs-slide="next">
+				<span class="carousel-control-next-icon" />
+				<span class="visually-hidden">Следующий</span>
+			</button>
+		{/if}
 	</div>
-	{#if album.photos.length > 1}
-		<button class="carousel-control-prev" data-bs-target="#carouselExample" data-bs-slide="prev">
-			<span class="carousel-control-prev-icon" />
-			<span class="visually-hidden">Предыдущий</span>
-		</button>
-		<button class="carousel-control-next" data-bs-target="#carouselExample" data-bs-slide="next">
-			<span class="carousel-control-next-icon" />
-			<span class="visually-hidden">Следующий</span>
-		</button>
-	{/if}
-</div>
+{/if}

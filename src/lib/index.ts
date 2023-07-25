@@ -1,1 +1,1 @@
-// place files you want to import through the `$lib` alias in this folder.
+// поместите файлы, которые вы хотите импортировать, через псевдоним `$lib` в эту папку.
