@@ -11,7 +11,7 @@
 
 	let album = new Album();
 	onMount(async () => {
-		onValue(ref(db, `/photos/${$page.params.uid}`), (s) => {
+		onValue(ref(db, `/photos/${$page.params.uid}`), s => {
 			if (s.exists()) {
 				album = s.val();
 				if (!album.photos) album.photos = new Array();
@@ -32,8 +32,7 @@
 				if (!album.cover && album.photos.length > 0) album.cover = album.photos[0].url;
 				update(ref(db, `/photos/${$page.params.uid}`), album);
 				goto('/admin/photos');
-			}}>Сохранить</button
-		>
+			}}>Сохранить</button>
 	</div>
 </PageTitleWrap>
 
@@ -49,24 +48,14 @@
 		<div class="tab-pane active show" id="cover">
 			<div class="row">
 				<div class="col-md-8">
-					<input
-						class="form-control border-primary mb-3 bg-light text-dark"
-						placeholder="заголовок"
-						bind:value={album.title}
-					/>
+					<input class="form-control border-primary mb-3 bg-light text-dark" placeholder="заголовок" bind:value={album.title} />
 					<input
 						class="form-control border-primary mb-3 bg-light text-dark"
 						placeholder="описание"
-						bind:value={album.description}
-					/>
+						bind:value={album.description} />
 					<div class="input-group mb-3">
-						<span class="input-group-text bg-primary text-dark border-primary">Дата публикации</span
-						>
-						<input
-							type="date"
-							class="form-control border-primary bg-light text-dark"
-							bind:value={album.date}
-						/>
+						<span class="input-group-text bg-primary text-dark border-primary">Дата публикации</span>
+						<input type="date" class="form-control border-primary bg-light text-dark" bind:value={album.date} />
 					</div>
 				</div>
 				<div class="col-md-4">
@@ -74,8 +63,7 @@
 						<input
 							class="form-control border-primary mb-3 bg-light text-dark"
 							placeholder="обложка (url фото)"
-							bind:value={album.cover}
-						/>
+							bind:value={album.cover} />
 						{#if album.cover}
 							<img class="card-img rounded" src={album.cover} alt="" />
 						{/if}
@@ -84,9 +72,7 @@
 			</div>
 		</div>
 		<div class="tab-pane" id="content">
-			<button
-				class="btn btn-sm btn-dark mb-3"
-				on:click={() => (album.photos = [...album.photos, new _Photo()])}
+			<button class="btn btn-sm btn-dark mb-3" on:click={() => (album.photos = [...album.photos, new _Photo()])}
 				><i class="fa-solid fa-plus" /> фото
 			</button>
 			<div class="row row-cols-1 row-cols-md-3 g-3">
@@ -102,8 +88,7 @@
 								album.photos.splice(i + 1, 0, album.photos.splice(i, 1)[0]);
 								album.photos = [...album.photos];
 							}}
-							onDelete={() => (album.photos = album.photos.filter((p) => p != photo))}
-						/>
+							onDelete={() => (album.photos = album.photos.filter(p => p != photo))} />
 					</div>
 				{/each}
 			</div>
