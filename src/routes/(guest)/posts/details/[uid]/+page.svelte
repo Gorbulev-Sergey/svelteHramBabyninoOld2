@@ -14,6 +14,12 @@
 	});
 </script>
 
+<svelte:head>
+	{#if post.title}
+		<title>{post.title}</title>
+	{/if}
+</svelte:head>
+
 {#if post.title}
 	<button
 		class="btn btn-primary text-dark text-nowrap"
