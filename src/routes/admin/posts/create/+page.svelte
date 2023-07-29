@@ -4,7 +4,7 @@
 	import TagManager from '$lib/components/tags/TagManager.svelte';
 	import { Post } from '$lib/models/Post';
 	import { Tag } from '$lib/models/Tag';
-	import { db } from '$lib/scripts/firebase';
+	import { auth, db } from '$lib/scripts/firebase';
 	import { onValue, push, ref } from 'firebase/database';
 	import { onMount } from 'svelte';
 	import Editor from '$lib/components/posts/Editor.svelte';
@@ -29,6 +29,8 @@
 			class="btn btn-dark bg-opacity-10"
 			on:click={async () => {
 				if (post.title != '') {
+					post.userName=auth.currentUser?.displayName;
+					post.userUID=auth.currentUser?.uid;					
 					push(ref(db, '/posts'), post);
 					goto('/admin/posts');
 				}

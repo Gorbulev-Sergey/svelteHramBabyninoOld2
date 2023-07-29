@@ -20,10 +20,19 @@
 					{/if}
 				</div>
 				<div class="d-flex justify-content-between align-items-center mb-1">
-					<div class="small text-danger">
-						{new Date(post.created).getDate()}
-						{new Date(post.created).monthName()}
-						{new Date(post.created).getFullYear()}
+					<div class="d-flex align-items-center">
+						<div class="small text-danger">
+							{new Date(post.created).getDate()}
+							{new Date(post.created).monthName()}
+							{new Date(post.created).getFullYear()}
+						</div>
+						{#if post.userName}
+							<small>
+								<div class="ms-2 badge bg-dark text-light">
+									Автор: {post.userName}
+								</div>
+							</small>
+						{/if}
 					</div>
 					<div>
 						{#if post.tags}
@@ -84,7 +93,7 @@
 				</div>
 			{:else if post.cover && post.cover.image}
 				<div
-					class="img-fluid  rounded-end h-100"
+					class="img-fluid rounded-end h-100"
 					style="background-image: url({post.cover.image});
 					 background-repeat: no-repeat; background-position: center; background-size: cover; min-height:12em;" />
 			{/if}
