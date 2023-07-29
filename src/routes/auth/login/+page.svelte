@@ -1,7 +1,8 @@
 <script>
 	import { goto } from '$app/navigation';
-	import { auth } from '$lib/scripts/firebase';
+	import { auth, db } from '$lib/scripts/firebase';
 	import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+	import { onValue, ref } from 'firebase/database';
 
 	let credential = { email: '', password: '' };
 	let errorMessage = '';
@@ -14,7 +15,14 @@
 			credential.password.trim() !== '' &&
 			credential.password.length > 3
 		) {
-			signInWithEmailAndPassword(auth, credential.email, credential.password).then(r => goto('/admin/posts'));
+			signInWithEmailAndPassword(auth, credential.email, credential.password).then(r => {
+				onValue(ref(db, '/admins'), s => {
+					if (s.exists() && auth.currentUser) {
+						if (s.hasChild(auth.currentUser?.uid)) goto('/admin/posts');
+						else goto('/');
+					}
+				});
+			});
 		}
 	}
 	function checkEmailAndPassword() {
@@ -27,8 +35,8 @@
 </script>
 
 <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-	<div class="bg-light text-dark p-3 rounded">
-		<div class="mb-2">
+	<div class="bg-light text-dark p-3 rounded" style="min-width:23em;">
+		<div class="mb-2 text-center">
 			<b class="text-uppercase">Вход для администраторов сайта</b>
 		</div>
 		<div class="text-danger small">{@html errorMessage}</div>
