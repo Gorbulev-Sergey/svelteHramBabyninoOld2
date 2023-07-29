@@ -28,3 +28,6 @@ onValue(ref(db, '/tags'), s => {
 	tags.forEach(v => m.set(v.name, showedPostsStep));
 	mapShowedPostsLength.set(m);
 });
+
+// Пользователь, который вошёл в систему
+export let userSigned = writable({});
