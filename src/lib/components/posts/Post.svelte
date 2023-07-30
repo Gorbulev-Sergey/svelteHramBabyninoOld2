@@ -7,11 +7,15 @@
 	export let uid = '';
 	export let post = new Post();
 	export let _class = '';
+	export let isHeightAuto = true;
 	let showContent = false;
 </script>
 
 <div id={uid ? uid : ''} class="col">
-	<div class="card {!post.inverted ? 'bg-light text-dark' : 'bg-dark text-light'} border-0 h-100 border {_class}">
+	<div
+		class="card {!post.inverted ? 'bg-light text-dark' : 'bg-dark text-light'} border-0 {isHeightAuto
+			? 'h-100'
+			: ''}  border {_class}">
 		<div class="card-header {!post.inverted ? 'bg-light text-dark' : 'bg-dark text-light'} border-0">
 			<div class="d-flex justify-content-between">
 				<h5 class="card-title my-1">{@html post.title}</h5>
