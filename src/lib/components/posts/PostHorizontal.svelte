@@ -26,13 +26,13 @@
 							{new Date(post.created).monthName()}
 							{new Date(post.created).getFullYear()}
 						</div>
-						{#if post.userName}
+						<!-- {#if post.userName}
 							<small>
-								<div class="ms-2 badge bg-dark text-light">
+								<div class="ms-2 badge bg-light bg-opacity-10 text-muted">
 									Автор: {post.userName}
 								</div>
 							</small>
-						{/if}
+						{/if} -->
 					</div>
 					<div>
 						{#if post.tags}
