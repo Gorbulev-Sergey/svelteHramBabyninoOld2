@@ -60,7 +60,7 @@
 								class="btn btn-sm btn-primary text-dark"
 								on:click={() => {
 									if (uid) goto(`/posts/details/${uid}?returnUrl=${$page.url.pathname}`);
-								}}><i class="fa-solid fa-circle-arrow-right me-1" />...</button>
+								}}><i class="fa-solid fa-circle-arrow-right me-2" />Смотреть подробности</button>
 						</div>
 					{/if}
 				</div>

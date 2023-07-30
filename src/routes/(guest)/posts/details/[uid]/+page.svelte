@@ -24,7 +24,7 @@
 	<button
 		class="btn btn-primary text-dark text-nowrap"
 		on:click={() => goto(`${$page.url.searchParams.get('returnUrl')}/#${$page.params.uid}`)}
-		><i class="fa-solid fa-circle-arrow-left me-1" />...</button>
+		><i class="fa-solid fa-circle-arrow-left me-2" />Вернуться назад</button>
 
 	<div class="bg-light text-dark rounded my-2">
 		<div
@@ -33,7 +33,7 @@
 					 background-repeat: no-repeat; background-position: center; background-size: cover; min-height:14em;">
 			<div class="d-flex justify-content-between align-items-end bg-light bg-opacity-50 text-dark p-3">
 				<div class="me-4">
-					<h4 class="mb-0 pb-0">{post.title}</h4>
+					<h4 class="mb-0 pb-0">{@html post.title}</h4>
 					{#if post.description}
 						<div class="mt-1 small">{@html post.description}</div>
 					{/if}
@@ -55,5 +55,5 @@
 	<button
 		class="btn btn-primary text-dark text-nowrap"
 		on:click={() => goto(`${$page.url.searchParams.get('returnUrl')}/#${$page.params.uid}`)}
-		><i class="fa-solid fa-circle-arrow-left me-1" />...</button>
+		><i class="fa-solid fa-circle-arrow-left me-2" />Вернуться назад</button>
 {/if}
