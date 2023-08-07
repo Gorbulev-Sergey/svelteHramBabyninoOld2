@@ -31,7 +31,7 @@
 			class="d-flex flex-column justify-content-end rounded-top"
 			style="background-image: url({post.cover?.image ? post.cover.image : ''});
 					 background-repeat: no-repeat; background-position: center; background-size: cover; min-height:14em;">
-			<div class="d-flex justify-content-between align-items-end bg-light bg-opacity-50 text-dark p-3">
+			<div class="d-flex justify-content-between align-items-end bg-light bg-opacity-50 text-dark px-4 py-3">
 				<div class="me-4">
 					<h4 class="mb-0 pb-0">{@html post.title}</h4>
 					{#if post.description}
@@ -47,7 +47,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="p-3">
+		<div class="p-4">
 			{@html post.content}
 		</div>
 	</div>
