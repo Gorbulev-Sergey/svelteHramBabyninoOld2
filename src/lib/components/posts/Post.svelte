@@ -74,12 +74,12 @@
 					 background-repeat: no-repeat; background-position: center; background-size: cover; min-height:12em;" />
 		{/if}
 		{#if post.description}
-			<div class="m-3" style="font-size:1em;">
+			<div class="mx-3 mt-2 mb-2" style="font-size:1em;">
 				{@html post.description}
 			</div>
 		{/if}
 		{#if post.content}
-			<div class="d-flex align-items-center justify-content-end mx-3 mb-3">
+			<div class="d-flex align-items-center justify-content-end mx-3 mb-2">
 				<button
 					class="btn btn-sm btn-primary text-dark"
 					on:click={() => {
@@ -87,6 +87,7 @@
 					}}><i class="fa-solid fa-circle-arrow-right me-2" />Смотреть подробности</button>
 			</div>
 		{/if}
+		<div class="mb-2" />
 		<slot name="admin" />
 	</div>
 </div>
