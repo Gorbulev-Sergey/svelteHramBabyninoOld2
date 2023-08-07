@@ -50,12 +50,12 @@
 				</div>
 				<div class="card-text" style="font-size:1em;">
 					{#if post.description}
-						<div class="card-body" style="font-size:1em;">
+						<div class="py-1" style="font-size:1em;">
 							{@html post.description}
 						</div>
 					{/if}
 					{#if post.content}
-						<div class="d-flex align-items-center justify-content-end">
+						<div class="d-flex align-items-center justify-content-end mt-2">
 							<button
 								class="btn btn-sm btn-primary text-dark"
 								on:click={() => {

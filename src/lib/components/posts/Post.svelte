@@ -74,7 +74,7 @@
 					 background-repeat: no-repeat; background-position: center; background-size: cover; min-height:12em;" />
 		{/if}
 		{#if post.description}
-			<div class="card-body" style="font-size:1em;">
+			<div class="m-3" style="font-size:1em;">
 				{@html post.description}
 			</div>
 		{/if}
