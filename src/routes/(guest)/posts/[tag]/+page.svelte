@@ -55,7 +55,7 @@
 			<!--Для закреплённых-->
 			<div class="row row-cols-1 row-cols-md-3 g-3 flex-row-reverse">
 				{#each mapShowedPosts.filter(([k, v]) => v.pinned && !v.isHorisontal) as [uid, post], i}
-					<Post {uid} isHeightAuto={false} bind:post />
+					<Post {uid} isHeightAuto={true} bind:post />
 				{/each}
 			</div>
 		</div>
