@@ -65,6 +65,15 @@
 								}&hash=d46c7611ec96988b`
 							)
 							.replace('-' + post.cover.video?.split('-')[1], '')} />
+				{:else if post.cover.video.includes('https://rutube.ru/video')}
+					<iframe
+						frameBorder="0"
+						allow="clipboard-write; autoplay"
+						webkitAllowFullScreen
+						mozallowfullscreen
+						allowFullScreen
+						class="embed-responsive-item"
+						src={post.cover.video.replace('https://rutube.ru/video/', 'https://rutube.ru/play/embed/')} />
 				{/if}
 			</div>
 		{:else if post.cover && post.cover.image}
