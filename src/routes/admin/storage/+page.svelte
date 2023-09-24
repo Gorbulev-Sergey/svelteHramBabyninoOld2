@@ -5,13 +5,12 @@
 	import { child } from 'firebase/database';
 	import { uploadBytes, ref, getDownloadURL, listAll, getMetadata, uploadString } from 'firebase/storage';
 	import { onMount } from 'svelte';
-	import { each } from 'svelte/internal';
 
 	let images = new Array();
 	$: imagesFromStorage = new Array();
 
 	onMount(async () => {
-		listAll(ref(storage, '/Природа')).then(s => {
+		listAll(ref(storage, '/Новая')).then(s => {
 			s.prefixes.forEach(i => {
 				console.log(i.name);
 			});
@@ -41,11 +40,10 @@
 				class="btn btn-dark"
 				on:click={() => {
 					console.log(images);
-					images.forEach(item => {
-						console.log(item);
-						uploadBytes(ref(storage, `Природа/${item.name}`), item).then(s => {
+					Array.from(images).forEach(item => {
+						uploadBytes(ref(storage, `/Новая/${item.name}`), item).then(s => {
 							imagesFromStorage = [
-								`https://${s.metadata.ref.storage.host}/v0/b/sveltehrambabynino.appspot.com/o/${s.metadata.fullPath.replace(
+								`https://${s.metadata.ref.storage.host}/v0/b/gs://hramkuksha.appspot.com/o/${s.metadata.fullPath.replace(
 									'/',
 									'%2F'
 								)}?alt=media`,
