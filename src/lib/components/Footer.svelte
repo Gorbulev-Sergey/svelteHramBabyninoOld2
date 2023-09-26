@@ -26,16 +26,12 @@
 							goto('/auth/login');
 						}} />
 				</IsAuth>
-				<span>Храм "Вознесения Господня", посёлок Бабынино, Калужская область, {new Date(Date.now()).getFullYear()} год</span>
+				<span>Храм вмч. Кукши Печерского, посёлок Лесной, Калужская область, {new Date(Date.now()).getFullYear()} год</span>
 			</div>
 			<div class="pb-1 text-center">
 				Контакты:
 				<span>
-					храм: <a class="badge bg-primary text-dark" style="text-decoration: none;" href="tel:8-902-934-63-62">8-902-934-63-62</a
-					>,
-				</span>
-				<span>
-					иерей Алексий:
+					иерей Георгий:
 					<a
 						class="text-success"
 						style="text-decoration: none;"
@@ -45,20 +41,7 @@
 						rel="noopener noreferrer">
 						<i class="fa-brands fa-whatsapp" />
 					</a>
-					<a class="badge bg-primary text-dark" style="text-decoration: none;" href="tel:8-920-876-89-28">8-920-876-89-28</a>,
-				</span>
-				<span>
-					иерей Сергий:
-					<a
-						class="text-success"
-						style="text-decoration: none;"
-						href="https://api.whatsapp.com/send?phone=79105163686"
-						target="_blank"
-						title="Написать в Whatsapp"
-						rel="noopener noreferrer">
-						<i class="fa-brands fa-whatsapp" />
-					</a>
-					<a class="badge bg-primary text-dark" style="text-decoration: none;" href="tel:8-910-516-36-86">8-910-516-36-86</a>
+					<a class="badge bg-primary text-dark" style="text-decoration: none;" href="tel:8-916-954-72-75">8-916-954-72-75</a>,
 				</span>
 			</div>
 			<img
