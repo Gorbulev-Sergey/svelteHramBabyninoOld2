@@ -17,7 +17,6 @@
 	let getFolders = () => listAll(ref(storage, albumsRef)).then(result => (folders = result.prefixes));
 	let getPhotos = () => {
 		if (folders.length > 0) {
-			console.log(folders[selectedFolder].fullPath);
 			listAll(ref(storage, ref(storage, folders[selectedFolder].fullPath))).then(s => {
 				photos = s.items.filter(p => p.name != 'empty');
 				// getDownloadURL(ref(storage, photos[0].fullPath)).then(s => {
@@ -56,12 +55,20 @@
 </PageTitle>
 
 <div class="d-flex justify-content-start align-items-start gap-2 mb-4">
-	{#each folders as item}
-		<div class="d-flex align-items-center bg-light px-2 rounded-1">
+	{#each folders as item, i}
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<div
+			class="d-flex align-items-center {selectedFolder == i ? 'bg-dark text-light' : 'bg-light'}  px-2 rounded-1"
+			style=" cursor:pointer"
+			on:click={() => {
+				selectedFolder = i;
+				getPhotos();
+			}}>
 			<div class="p-2">{item.name}</div>
 			<button
-				class="btn btn-sm btn-light text-danger"
-				on:click={() => {
+				class="btn btn-sm {selectedFolder == i ? 'btn-dark' : 'btn-light'} text-danger"
+				on:click|stopPropagation={() => {
 					listAll(ref(storage, `/${item.fullPath}`)).then(s => {
 						if (s.items.filter(p => p.name != 'empty').length == 0) {
 							deleteObject(ref(storage, `${item.fullPath}/empty`)).then(() => getFolders());
@@ -74,11 +81,13 @@
 
 {#if photos.length > 0}
 	<h4 class="mb-3">Фотографии в папке "{folders[selectedFolder].name}"</h4>
-	{#each photos as photo}
-		{#await getDownloadURL(ref(storage, photo.fullPath)) then s}
-			<div
-				class="rounded-1 w-25"
-				style="background-image: url({s}); background-repeat: no-repeat; background-position: center; background-size: cover; min-height:12em;" />
-		{/await}
-	{/each}
+	<div class="d-flex gap-2">
+		{#each photos as photo}
+			{#await getDownloadURL(ref(storage, photo.fullPath)) then s}
+				<div
+					class="rounded-1 w-25"
+					style="background-image: url({s}); background-repeat: no-repeat; background-position: center; background-size: cover; min-height:12em;" />
+			{/await}
+		{/each}
+	</div>
 {/if}
