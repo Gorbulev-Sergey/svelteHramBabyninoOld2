@@ -26,7 +26,8 @@
 							goto('/auth/login');
 						}} />
 				</IsAuth>
-				<span>Храм вмч. Кукши Печерского, посёлок Лесной, Калужская область, {new Date(Date.now()).getFullYear()} год</span>
+				<span
+					>Храм великомученика Кукши Печерского, посёлок Лесной, Калужская область, {new Date(Date.now()).getFullYear()} год</span>
 			</div>
 			<div class="pb-1 text-center">
 				Контакты:
@@ -41,7 +42,7 @@
 						rel="noopener noreferrer">
 						<i class="fa-brands fa-whatsapp" />
 					</a>
-					<a class="badge bg-primary text-dark" style="text-decoration: none;" href="tel:8-916-954-72-75">8-916-954-72-75</a>,
+					<a class="badge bg-primary text-dark" style="text-decoration: none;" href="tel:8-916-954-72-75">8-916-954-72-75</a>
 				</span>
 			</div>
 			<img
