@@ -42,15 +42,9 @@
 						rel="noopener noreferrer">
 						<i class="fa-brands fa-whatsapp" />
 					</a>
-					<a class="badge bg-primary text-dark" style="text-decoration: none;" href="tel:8-916-954-72-75">8-916-954-72-75</a>
+					<a class="badge bg-primary text-dark" style="text-decoration: none;" href="tel:89169547275">8-916-954-72-75</a>
 				</span>
 			</div>
-			<img
-				hidden
-				class="my-2 rounded-3"
-				style="width: 8em;"
-				src="https://mana.su/wp-content/uploads/2017/06/kartinka-s-rozhdestvom-3.jpg"
-				alt="" />
 		</div>
 	</div>
 </footer>
