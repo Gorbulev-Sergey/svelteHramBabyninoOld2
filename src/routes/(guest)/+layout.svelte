@@ -12,6 +12,10 @@
 			title: 'Расписание'
 		},
 		{
+			url: '/posts/св. писание',
+			title: 'Святое Писание'
+		},
+		{
 			url: '/posts/о нашем храме',
 			title: 'О храме'
 		},
@@ -37,7 +41,7 @@
 	];
 </script>
 
-<Navigation title="<span class='text-success'>Храм</span> КУКШИ ПЕЧЕРСКОГО" {routesLeft} {routesRight} />
+<Navigation title="<span class='text-danger'>Храм</span> ВОЗНЕСЕНИЯ ГОСПОДНЯ" {routesLeft} {routesRight} />
 <div class="container my-4 py-1" style=" min-height:90vh;">
 	<slot />
 </div>

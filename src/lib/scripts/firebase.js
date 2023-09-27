@@ -4,14 +4,14 @@ import { getStorage } from 'firebase/storage';
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
-	apiKey: 'AIzaSyDqpVHXmSEggGVi0YFugdvEoloTfgmUSPU',
-	authDomain: 'hramkuksha.firebaseapp.com',
-	databaseURL: 'https://hramkuksha-default-rtdb.firebaseio.com',
-	projectId: 'hramkuksha',
-	storageBucket: 'hramkuksha.appspot.com',
-	messagingSenderId: '361128708836',
-	appId: '1:361128708836:web:539e4ad77d70703d097af1',
-	measurementId: 'G-ZWLBYZXV33'
+	apiKey: 'AIzaSyDTYaF-wCPkWo0aStWuMwaw5yAWBQPAdmE',
+	authDomain: 'sveltehrambabynino.firebaseapp.com',
+	databaseURL: 'https://sveltehrambabynino-default-rtdb.firebaseio.com',
+	projectId: 'sveltehrambabynino',
+	storageBucket: 'sveltehrambabynino.appspot.com',
+	messagingSenderId: '762814125883',
+	appId: '1:762814125883:web:59c85e90c358d62c66891e',
+	measurementId: 'G-HSLZ53GCM0'
 };
 
 const app = initializeApp(firebaseConfig);

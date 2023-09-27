@@ -55,22 +55,20 @@
 				{/each}
 			</div>
 		</div>
-		{#if contacts.socialNetworks}
-			<div class="col-md-2">
-				<div class="bg-light text-dark rounded p-3 w-100 h-100">
-					<h5>Соцсети:</h5>
-					{#each contacts.socialNetworks as item}
-						<a
-							class="btn btn-primary rounded-circle me-1 px-1"
-							style="width: 2.5em; height:2.5em"
-							href={item.url}
-							target="_blank"
-							title={item.title}
-							alt={item.title}>{@html item.icon}</a>
-					{/each}
-				</div>
+		<div class="col-md-2">
+			<div class="bg-light text-dark rounded p-3 w-100 h-100">
+				<h5>Соцсети:</h5>
+				{#each contacts.socialNetworks as item}
+					<a
+						class="btn btn-primary rounded-circle me-1 px-1"
+						style="width: 2.5em; height:2.5em"
+						href={item.url}
+						target="_blank"
+						title={item.title}
+						alt={item.title}>{@html item.icon}</a>
+				{/each}
 			</div>
-		{/if}
+		</div>
 	</div>
 	<div class="row mt-3">
 		<div class="col">
