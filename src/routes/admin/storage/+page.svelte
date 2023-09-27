@@ -21,9 +21,6 @@
 		if (folders.length > 0) {
 			listAll(ref(storage, ref(storage, folders[selectedFolder].fullPath))).then(s => {
 				photos = s.items.filter(p => p.name != 'empty');
-				// getDownloadURL(ref(storage, photos[0].fullPath)).then(s => {
-				// 	console.log(s);
-				// });
 			});
 		}
 	};
