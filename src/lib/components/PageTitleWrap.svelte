@@ -1,10 +1,10 @@
 <script>
 	export let titleSpecial = '';
 	export let title = 'Публикации';
-	export let description = 'Сайт храма Вознесения Господня пос. Бабынино';
-	export let author = 'Сергей Горбулёв';
-	export let copyright = 'Храм Вознесения Господня пос. Бабынино';
-	export let address = '249210, Калужская обл., пос. Бабынино, Базарная пл., 1';
+	export let description = 'Храм Кукши Печерского';
+	export let author = '';
+	export let copyright = 'Храм Кукши Печерского';
+	export let address = '';
 	export let keywords = '';
 	export let _class = '';
 </script>
@@ -16,9 +16,7 @@
 	<meta name="copyright" content={copyright} />
 	<meta name="address" content={address} />
 	<meta name="keywords" content={keywords} />
-	<meta
-		name="keywords"
-		content="храм бабынино, бабынино храм, бабынино храм Вознесения, храм Вознесения Господня, церковь бабынино, храм поселок бабынино, калуга храм, калужская область храм, бабынинский район храм, Вознесение Господне" />
+	<meta name="keywords" content="Храм Кукши Печерского" />
 </svelte:head>
 
 <div class="d-flex justify-content-between flex-wrap align-items-center mb-3 no-print {_class}">
