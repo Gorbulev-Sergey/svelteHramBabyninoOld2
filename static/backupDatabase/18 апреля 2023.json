@@ -2426,8 +2426,8 @@
 			"published": false,
 			"tags": [
 				{
-					"description": "Объявления",
-					"name": "объявления"
+					"description": "Главное",
+					"name": "главное"
 				}
 			],
 			"title": "Молебен <b class=\"text-uppercase\">о воинах</b>"
@@ -3375,8 +3375,8 @@
 			"published": false,
 			"tags": [
 				{
-					"description": "Объявления",
-					"name": "объявления"
+					"description": "Главное",
+					"name": "главное"
 				}
 			],
 			"title": "Новые разделы на нашем сайте"
@@ -3390,8 +3390,8 @@
 			"published": false,
 			"tags": [
 				{
-					"description": "Объявления",
-					"name": "объявления"
+					"description": "Главное",
+					"name": "главное"
 				}
 			],
 			"title": "<b class=\"text-uppercase\">Начало Великого Поста</b>"
@@ -3425,8 +3425,8 @@
 			"published": false,
 			"tags": [
 				{
-					"description": "Объявления",
-					"name": "объявления"
+					"description": "Главное",
+					"name": "главное"
 				}
 			],
 			"title": "11 марта - родительская суббота"
@@ -3528,8 +3528,8 @@
 			"published": false,
 			"tags": [
 				{
-					"description": "Объявления",
-					"name": "объявления"
+					"description": "Главное",
+					"name": "главное"
 				}
 			],
 			"title": "7 апреля, пятница - БЛАГОВЕЩЕНИЕ ПРЕСВЯТОЙ БОГОРОДИЦЫ"
@@ -3546,8 +3546,8 @@
 			"published": false,
 			"tags": [
 				{
-					"description": "Объявления",
-					"name": "объявления"
+					"description": "Главное",
+					"name": "главное"
 				}
 			],
 			"title": "9 апреля, воскресенье - ВХОД ГОСПОДЕНЬ В ИЕРУСАЛИМ"
@@ -3564,8 +3564,8 @@
 			"published": true,
 			"tags": [
 				{
-					"description": "Объявления",
-					"name": "объявления"
+					"description": "Главное",
+					"name": "главное"
 				}
 			],
 			"title": "16 апреля - ВОСКРЕСЕНИЕ ГОСПОДНЕ. ПАСХА"
@@ -3580,8 +3580,8 @@
 			"published": false,
 			"tags": [
 				{
-					"description": "Объявления",
-					"name": "объявления"
+					"description": "Главное",
+					"name": "главное"
 				}
 			],
 			"title": "Расписание богослужений"
@@ -3683,8 +3683,8 @@
 			"published": false,
 			"tags": [
 				{
-					"description": "Объявления",
-					"name": "объявления"
+					"description": "Главное",
+					"name": "главное"
 				}
 			],
 			"title": "Освящение пасох и куличей"
@@ -4892,8 +4892,8 @@
 	},
 	"tags": [
 		{
-			"description": "Объявления",
-			"name": "объявления"
+			"description": "Главное",
+			"name": "главное"
 		},
 		{
 			"description": "Видео",

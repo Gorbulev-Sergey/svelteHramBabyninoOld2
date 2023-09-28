@@ -12,7 +12,7 @@ export let adminPostsFilters = writable({
 	published: true,
 	pinned: false,
 	newFirst: true,
-	tag: new Tag('объявления', 'Объявления')
+	tag: new Tag('главное', 'Главное')
 });
 
 // Для работы расписания богослужений
