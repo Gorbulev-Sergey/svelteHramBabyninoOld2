@@ -5,17 +5,23 @@
 	import { uploadBytes, ref, getDownloadURL, listAll, getMetadata, uploadString, deleteObject } from 'firebase/storage';
 	import { onMount } from 'svelte';
 
+	let tabs = { selectedTab: 0, tab: ['Хранилище фотографий', 'Хранилище документов'] };
 	let folders = [];
 	let photos = [];
 	let photosForUpload = [];
-	let tabs = { selectedTab: 0, tab: ['Хранилище фотографий', 'Хранилище документов'] };
+	let documents = [];
+	let documentsForUpload = [];
 
 	// Корневая папка для фотографий
 	let albumsFolder = '/Photos';
 	let albumsRef = ref(storage, `${albumsFolder}`);
 	let newFolderName = '';
 	let selectedFolder = 0;
-	let labelFakeForUploadButton = 'Выберите фотографии для загрузки';
+	let labelFakeForUploadButton = 'Выберите файлы для загрузки';
+
+	// Корневая папка для документов
+	let documentsFolder = '/Documents';
+	let documentsRef = ref(storage, `${documentsFolder}`);
 
 	let getFolders = () => listAll(ref(storage, albumsRef)).then(result => (folders = result.prefixes));
 	let getPhotos = () => {
@@ -25,10 +31,19 @@
 			});
 		}
 	};
+	let getDocuments = () => {
+		if (folders.length > 0) {
+			listAll(documentsRef).then(s => {
+				documents = s.items;
+			});
+		}
+	};
 
 	onMount(async () => {
 		getFolders().then(() => {
 			getPhotos();
+
+			getDocuments();
 		});
 	});
 </script>
@@ -73,7 +88,6 @@
 				</div>
 			</div>
 		</PageTitle>
-
 		<div class="d-flex flex-wrap justify-content-start align-items-start gap-2 mb-5">
 			{#each folders as item, i}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -85,7 +99,7 @@
 						selectedFolder = i;
 						getPhotos();
 					}}>
-					<div class="p-2">{item.name}</div>
+					<div class="p-2 {selectedFolder == i ? 'text-light' : 'text-dark'}">{item.name}</div>
 					<button
 						class="btn btn-sm {selectedFolder == i ? 'btn-dark' : 'btn-light'} text-danger"
 						on:click|stopPropagation={() => {
@@ -98,6 +112,7 @@
 				</div>
 			{/each}
 		</div>
+
 		<PageTitle title={`Фотографии в папке "${folders[selectedFolder]?.name ?? ''}"`}>
 			<div slot="navigation">
 				<div class="input-group">
@@ -132,7 +147,7 @@
 								});
 							});
 							photosForUpload = [];
-							labelFakeForUploadButton = 'Выберите фотографии для загрузки';
+							labelFakeForUploadButton = 'Выберите файлы для загрузки';
 						}}>Загрузить</button>
 				</div>
 			</div>
@@ -165,7 +180,68 @@
 			</div>
 		{/if}
 	</div>
-	<div id="documents" class="tab-pane fade">ddfgh</div>
+	<div id="documents" class="tab-pane fade">
+		<PageTitle title={'Документы'}>
+			<div slot="navigation">
+				<div class="input-group">
+					<button
+						class="btn btn-light border-0"
+						on:click={() => {
+							document.querySelector('#buttonSelectDocuments').click();
+						}}>{labelFakeForUploadButton}</button>
+					<input
+						id="buttonSelectDocuments"
+						hidden
+						type="file"
+						multiple
+						class="form-control bg-light text-dark border-0"
+						bind:files={documentsForUpload}
+						on:change={() =>
+							(labelFakeForUploadButton =
+								documentsForUpload.length > 1 ? `Выбрано ${documentsForUpload.length} файлов` : documentsForUpload[0].name)} />
+					<button
+						class="btn btn-dark"
+						on:click={() => {
+							Array.from(documentsForUpload).forEach((p, i, a) => {
+								uploadBytes(ref(storage, `/${documentsFolder}/${p.name.replace('(', '').replace(')', '')}`), p).then(() => {
+									if (i == a.length - 1) {
+										getDocuments();
+									}
+								});
+							});
+							documentsForUpload = [];
+							labelFakeForUploadButton = 'Выберите файлы для загрузки';
+						}}>Загрузить</button>
+				</div>
+			</div>
+		</PageTitle>
+		{#if documents.length > 0}
+			<div class="d-flex flex-column align-items-start gap-2">
+				{#each documents as doc}
+					{#await getDownloadURL(ref(storage, doc.fullPath)) then s}
+						<div class="d-flex align-items-center justify-content-end bg-light rounded-1">
+							<div class="px-3 text-dark">{doc.name}</div>
+							<button
+								class="btn btn-sm btn-light bg-light bg-opacity-25 m-1 border-0 text-dark"
+								title="Скопировать url"
+								on:click={() => {
+									navigator.clipboard.writeText(s).then(s => {});
+								}}><i class="fa-solid fa-copy" /></button>
+							<button
+								class="btn btn-sm btn-light bg-light bg-opacity-25 m-1 border-0 text-danger"
+								title="Удалить"
+								on:click={() => {
+									deleteObject(ref(storage, `/${documentsFolder}/${doc.name}`));
+									getDocuments();
+								}}>
+								<i class="fa-solid fa-xmark" />
+							</button>
+						</div>
+					{/await}
+				{/each}
+			</div>
+		{/if}
+	</div>
 </div>
 
 <style>
