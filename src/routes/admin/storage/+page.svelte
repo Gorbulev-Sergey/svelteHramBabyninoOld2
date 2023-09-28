@@ -33,21 +33,22 @@
 	});
 </script>
 
-<nav class="d-flex">
-	<h4 class="flex-grow-1 text-uppercase px-1 my-0">{tabs.tab[tabs.selectedTab]}</h4>
-	<div class="nav d-flex flex-wrap mb-4">
-		<a
-			class="flex-grow-1 btn btn-light text-dark border-0 rounded-0 rounded-start py-2 active"
-			data-bs-toggle="tab"
-			href="#photos"
-			on:click={() => (tabs.selectedTab = 0)}>Фотографии</a>
-		<a
-			class="flex-grow-1 btn btn-light text-dark rounded-0 rounded-end border-0 py-2"
-			data-bs-toggle="tab"
-			href="#documents"
-			on:click={() => (tabs.selectedTab = 1)}>Документы</a>
+<PageTitle title={tabs.tab[tabs.selectedTab]} _class="text-uppercase mb-4">
+	<div slot="navigation">
+		<div class="nav d-flex flex-wrap">
+			<a
+				class="flex-grow-1 btn btn-light text-dark border-0 rounded-0 rounded-start py-2 active"
+				data-bs-toggle="tab"
+				href="#photos"
+				on:click={() => (tabs.selectedTab = 0)}>Фотографии</a>
+			<a
+				class="flex-grow-1 btn btn-light text-dark rounded-0 rounded-end border-0 py-2"
+				data-bs-toggle="tab"
+				href="#documents"
+				on:click={() => (tabs.selectedTab = 1)}>Документы</a>
+		</div>
 	</div>
-</nav>
+</PageTitle>
 
 <div class="tab-content">
 	<div id="photos" class="tab-pane fade show active">
