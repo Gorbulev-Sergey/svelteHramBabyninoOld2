@@ -158,20 +158,14 @@
 						<div
 							class="d-flex align-items-start justify-content-end rounded-1 gap-1 p-1"
 							style="width:23%; background-image: url({s}); background-repeat: no-repeat; background-position: center; background-size: cover; min-height:12em;">
-							<button
+							<a
 								class="btn btn-sm btn-light bg-light bg-opacity-25 border-0 text-dark"
 								title="Скачать фотографию"
-								on:click={() => {
-									const xhr = new XMLHttpRequest();
-									xhr.responseType = 'blob';
-									xhr.onload = event => {
-										const blob = xhr.response;
-									};
-									xhr.open('GET', s);
-									xhr.send();
-								}}>
+								href={s}
+								target="_blank"
+								download>
 								<i class="fa-solid fa-cloud-arrow-down" />
-							</button>
+							</a>
 							<button
 								class="btn btn-sm btn-light bg-light bg-opacity-25 border-0 text-dark"
 								title="Скопировать url"
