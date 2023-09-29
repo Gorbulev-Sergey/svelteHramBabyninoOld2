@@ -246,7 +246,7 @@
 
 <style>
 	a.active {
-		background: var(--bs-dark);
+		background: var(--bs-dark) !important;
 		color: var(--bs-light) !important;
 	}
 </style>
