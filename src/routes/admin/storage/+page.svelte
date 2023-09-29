@@ -112,7 +112,6 @@
 				</div>
 			{/each}
 		</div>
-
 		<PageTitleWrap title={`Фотографии в папке "${folders[selectedFolder]?.name ?? ''}"`}>
 			<div slot="navigation">
 				<div class="input-group">
