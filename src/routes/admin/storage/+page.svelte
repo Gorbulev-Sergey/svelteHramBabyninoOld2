@@ -1,5 +1,6 @@
 <script>
 	// @ts-nocheck
+	import PageTitleWrap from '$lib/components/PageTitleWrap.svelte';
 	import PageTitle from '$lib/components/PageTitle.svelte';
 	import { storage } from '$lib/scripts/firebase';
 	import { uploadBytes, ref, getDownloadURL, listAll, getMetadata, uploadString, deleteObject } from 'firebase/storage';
@@ -42,13 +43,12 @@
 	onMount(async () => {
 		getFolders().then(() => {
 			getPhotos();
-
 			getDocuments();
 		});
 	});
 </script>
 
-<PageTitle title={tabs.tab[tabs.selectedTab]} _class="text-uppercase mb-4">
+<PageTitleWrap title={tabs.tab[tabs.selectedTab]} _class="text-uppercase mb-4">
 	<div slot="navigation">
 		<div class="nav d-flex flex-wrap">
 			<a
@@ -63,11 +63,11 @@
 				on:click={() => (tabs.selectedTab = 1)}>Документы</a>
 		</div>
 	</div>
-</PageTitle>
+</PageTitleWrap>
 
 <div class="tab-content">
 	<div id="photos" class="tab-pane fade show active">
-		<PageTitle title="Папки с фотографиями">
+		<PageTitleWrap title="Папки с фотографиями">
 			<div slot="navigation">
 				<div class=" input-group">
 					<div class="input-group-text border-0">Создать папку:</div>
@@ -87,7 +87,7 @@
 						}}>Создать</button>
 				</div>
 			</div>
-		</PageTitle>
+		</PageTitleWrap>
 		<div class="d-flex flex-wrap justify-content-start align-items-start gap-2 mb-5">
 			{#each folders as item, i}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -112,8 +112,7 @@
 				</div>
 			{/each}
 		</div>
-
-		<PageTitle title={`Фотографии в папке "${folders[selectedFolder]?.name ?? ''}"`}>
+		<PageTitleWrap title={`Фотографии в папке "${folders[selectedFolder]?.name ?? ''}"`}>
 			<div slot="navigation">
 				<div class="input-group">
 					<button
@@ -135,7 +134,6 @@
 					<button
 						class="btn btn-dark"
 						on:click={() => {
-							console.log(photosForUpload);
 							Array.from(photosForUpload).forEach((p, i, a) => {
 								uploadBytes(
 									ref(storage, `/${albumsFolder}/${folders[selectedFolder].name}/${p.name.replace('(', '').replace(')', '')}`),
@@ -151,22 +149,30 @@
 						}}>Загрузить</button>
 				</div>
 			</div>
-		</PageTitle>
+		</PageTitleWrap>
 		{#if photos.length > 0}
 			<div class="d-flex flex-wrap gap-2">
 				{#each photos as photo}
 					{#await getDownloadURL(ref(storage, photo.fullPath)) then s}
 						<div
-							class="d-flex align-items-start justify-content-end rounded-1"
+							class="d-flex align-items-start justify-content-end rounded-1 gap-1 p-1"
 							style="width:23%; background-image: url({s}); background-repeat: no-repeat; background-position: center; background-size: cover; min-height:12em;">
+							<a
+								class="btn btn-sm btn-light bg-light bg-opacity-25 border-0 text-dark"
+								title="Скачать фотографию"
+								href={s}
+								target="_blank"
+								download>
+								<i class="fa-solid fa-cloud-arrow-down" />
+							</a>
 							<button
-								class="btn btn-sm btn-light bg-light bg-opacity-25 m-1 border-0 text-dark"
+								class="btn btn-sm btn-light bg-light bg-opacity-25 border-0 text-dark"
 								title="Скопировать url"
 								on:click={() => {
 									navigator.clipboard.writeText(s).then(s => {});
 								}}><i class="fa-solid fa-copy" /></button>
 							<button
-								class="btn btn-sm btn-light bg-light bg-opacity-25 m-1 border-0 text-danger"
+								class="btn btn-sm btn-light bg-light bg-opacity-25 border-0 text-danger"
 								title="Удалить фото"
 								on:click={() => {
 									deleteObject(ref(storage, `/${albumsFolder}/${folders[selectedFolder].name}/${photo.name}`));
@@ -181,7 +187,7 @@
 		{/if}
 	</div>
 	<div id="documents" class="tab-pane fade">
-		<PageTitle title={'Документы'}>
+		<PageTitleWrap title={'Документы'}>
 			<div slot="navigation">
 				<div class="input-group">
 					<button
@@ -214,21 +220,24 @@
 						}}>Загрузить</button>
 				</div>
 			</div>
-		</PageTitle>
+		</PageTitleWrap>
 		{#if documents.length > 0}
 			<div class="d-flex flex-column align-items-start gap-2">
 				{#each documents as doc}
 					{#await getDownloadURL(ref(storage, doc.fullPath)) then s}
-						<div class="d-flex align-items-center justify-content-end bg-light rounded-1">
-							<div class="px-3 text-dark">{doc.name}</div>
+						<div class="d-flex align-items-center justify-content-end bg-light rounded-1 p-1">
+							<div class="ps-2 pe-3 text-dark">{doc.name}</div>
+							<a class="btn btn-sm btn-light border-0 text-dark" title="Скачать файл" href={s} download>
+								<i class="fa-solid fa-cloud-arrow-down" />
+							</a>
 							<button
-								class="btn btn-sm btn-light bg-light bg-opacity-25 m-1 border-0 text-dark"
+								class="btn btn-sm btn-light border-0 text-dark"
 								title="Скопировать url"
 								on:click={() => {
 									navigator.clipboard.writeText(s).then(s => {});
 								}}><i class="fa-solid fa-copy" /></button>
 							<button
-								class="btn btn-sm btn-light bg-light bg-opacity-25 m-1 border-0 text-danger"
+								class="btn btn-sm btn-light border-0 text-danger"
 								title="Удалить"
 								on:click={() => {
 									deleteObject(ref(storage, `/${documentsFolder}/${doc.name}`));
