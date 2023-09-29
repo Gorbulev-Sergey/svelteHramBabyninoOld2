@@ -4,7 +4,7 @@
 	import Seo from '$lib/components/SEO.svelte';
 
 	onMount(async () => {
-		goto('/posts/объявления');
+		goto('/posts/главное');
 	});
 </script>
 
