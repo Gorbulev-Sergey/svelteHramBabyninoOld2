@@ -11,7 +11,7 @@
 	let m = '';
 
 	function loadData() {
-		onValue(ref(db, `/schedule/${$month.year}/${$month.monthName()}`), (result) => {
+		onValue(ref(db, `/schedule/${$month.year}/${$month.monthName()}`), result => {
 			$month.fildsDayNotEmpty = result.val();
 			$month.updateFildsDayAll();
 		});
@@ -34,12 +34,13 @@
 				$month = new _Month(Number(m.split('-')[1]), Number(m.split('-')[0]));
 				console.log($month);
 				loadData();
-			}}
-		/>
+			}} />
 	</div>
-	<div slot="navigation">
-		<button class="btn btn-dark" on:click={() => goto('/admin/schedule/edit')}>Редактировать</button
-		>
+	<div slot="navigation" class="d-flex gap-2">
+		<button class="btn btn-primary text-dark text-nowrap" on:click={() => window.print()}>
+			<i class="fa-solid fa-print" /> Печать
+		</button>
+		<button class="btn btn-dark" on:click={() => goto('/admin/schedule/edit')}>Редактировать</button>
 	</div>
 </PageTitleWrap>
 
