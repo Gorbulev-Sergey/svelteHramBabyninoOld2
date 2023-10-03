@@ -40,14 +40,21 @@
 		}
 	};
 
-	async function downloadImage(imageSrc) {
-		const image = await fetch(imageSrc);
+	async function downloadImage(src, title) {
+		const headers = {
+			mode: 'no-cors',
+			status: 200,
+			header: {
+				'Access-Control-Allow-Origin': '*'
+			}
+		};
+		const image = await fetch(src, headers);
 		const imageBlog = await image.blob();
 		const imageURL = URL.createObjectURL(imageBlog);
 
 		const link = document.createElement('a');
-		link.href = imageSrc;
-		link.download = 'файл';
+		link.href = imageURL;
+		link.download = title;
 		document.body.appendChild(link);
 		link.click();
 		document.body.removeChild(link);
@@ -173,7 +180,7 @@
 							<button
 								class="btn btn-sm btn-light bg-light bg-opacity-25 border-0 text-dark"
 								title="Скачать фотографию"
-								on:click={downloadImage(s)}>Скачать</button>
+								on:click={() => downloadImage(s, photo.name)}>Скачать</button>
 							<a
 								class="btn btn-sm btn-light bg-light bg-opacity-25 border-0 text-dark"
 								title="Скачать фотографию"
