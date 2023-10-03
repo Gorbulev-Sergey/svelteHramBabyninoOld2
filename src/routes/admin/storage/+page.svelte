@@ -41,13 +41,8 @@
 	};
 
 	let downloadImage = async (imageSrc, title) => {
-		// const headers = {
-		// 	mode: 'no-cors',
-		// 	status: 200,
-		// 	header: {
-		// 		'Access-Control-Allow-Origin': '*'
-		// 	}
-		// };
+		// 1. Для firebase storage нужно выполнить следующее -> https://stackoverflow.com/a/58613527/10241175
+		// 2.
 		const xhr = new XMLHttpRequest();
 		xhr.responseType = 'blob';
 		xhr.onload = e => {
