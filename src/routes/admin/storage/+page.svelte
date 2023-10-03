@@ -40,6 +40,29 @@
 		}
 	};
 
+	let downloadImage = async (imageSrc, title) => {
+		// const headers = {
+		// 	mode: 'no-cors',
+		// 	status: 200,
+		// 	header: {
+		// 		'Access-Control-Allow-Origin': '*'
+		// 	}
+		// };
+		const xhr = new XMLHttpRequest();
+		xhr.responseType = 'blob';
+		xhr.onload = e => {
+			const blob = xhr.response;
+			const link = document.createElement('a');
+			link.href = URL.createObjectURL(blob);
+			link.download = title;
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+		};
+		xhr.open('GET', imageSrc);
+		xhr.send();
+	};
+
 	onMount(async () => {
 		getFolders().then(() => {
 			getPhotos();
@@ -157,14 +180,10 @@
 						<div
 							class="d-flex align-items-start justify-content-end rounded-1 gap-1 p-1"
 							style="width:23%; background-image: url({s}); background-repeat: no-repeat; background-position: center; background-size: cover; min-height:12em;">
-							<a
+							<button
 								class="btn btn-sm btn-light bg-light bg-opacity-25 border-0 text-dark"
 								title="Скачать фотографию"
-								href={s}
-								target="_blank"
-								download>
-								<i class="fa-solid fa-cloud-arrow-down" />
-							</a>
+								on:click={downloadImage(s, photo.name)}><i class="fa-solid fa-cloud-arrow-down" /></button>
 							<button
 								class="btn btn-sm btn-light bg-light bg-opacity-25 border-0 text-dark"
 								title="Скопировать url"

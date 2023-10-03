@@ -19,7 +19,14 @@
 	};
 
 	async function downloadImage(imageSrc, i) {
-		const image = await fetch(imageSrc);
+		const headers = {
+			mode: 'no-cors',
+			status: 200,
+			header: {
+				'Access-Control-Allow-Origin': '*'
+			}
+		};
+		const image = await fetch(imageSrc, headers);
 		const imageBlog = await image.blob();
 		const imageURL = URL.createObjectURL(imageBlog);
 
