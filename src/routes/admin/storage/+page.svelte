@@ -40,6 +40,19 @@
 		}
 	};
 
+	async function downloadImage(imageSrc) {
+		const image = await fetch(imageSrc);
+		const imageBlog = await image.blob();
+		const imageURL = URL.createObjectURL(imageBlog);
+
+		const link = document.createElement('a');
+		link.href = imageSrc;
+		link.download = 'файл';
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+	}
+
 	onMount(async () => {
 		getFolders().then(() => {
 			getPhotos();
@@ -157,6 +170,10 @@
 						<div
 							class="d-flex align-items-start justify-content-end rounded-1 gap-1 p-1"
 							style="width:23%; background-image: url({s}); background-repeat: no-repeat; background-position: center; background-size: cover; min-height:12em;">
+							<button
+								class="btn btn-sm btn-light bg-light bg-opacity-25 border-0 text-dark"
+								title="Скачать фотографию"
+								on:click={downloadImage(s)}>Скачать</button>
 							<a
 								class="btn btn-sm btn-light bg-light bg-opacity-25 border-0 text-dark"
 								title="Скачать фотографию"
