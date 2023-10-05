@@ -19,6 +19,7 @@
 	let albumsFolder = '/Photos';
 	let albumsRef = ref(storage, `${albumsFolder}`);
 	let selectedFolder = 0;
+	let checkedPhotos = [];
 	let getFolders = () => listAll(ref(storage, albumsRef)).then(result => (folders = result.prefixes));
 	let getPhotos = () => {
 		if (folders.length > 0) {
@@ -86,7 +87,7 @@
 		</div>
 		<!-- Вкладка содержимое -->
 		<div id="content" class="tab-pane">
-			<div class="mb-3">
+			<div class="d-flex flex-wrap gap-1 mb-3">
 				<button class="btn btn-sm btn-dark me-1" on:click={() => (album.photos = [...album.photos, new _Photo()])}
 					><i class="fa-solid fa-plus" /> 1 фото
 				</button>
@@ -141,18 +142,18 @@
 							<!-- Папки -->
 							<div class="d-flex gap-2 mb-3">
 								<b class="my-1">Папки:</b>
-								<div class=" flex-grow-1 d-flex">
+								<div class="flex-grow-1 d-flex flex-wrap gap-1">
 									{#each folders as item, i}
 										<!-- svelte-ignore a11y-click-events-have-key-events -->
 										<!-- svelte-ignore a11y-no-static-element-interactions -->
 										<div
-											class="d-flex align-items-center {selectedFolder == i ? 'bg-dark text-light' : 'bg-light'} px-2 rounded-1"
+											class="d-flex align-items-top {selectedFolder == i ? 'bg-dark text-light' : 'bg-light'} px-2 rounded-1"
 											style="cursor:pointer"
 											on:click={() => {
 												selectedFolder = i;
 												getPhotos();
 											}}>
-											<div class="p-1 {selectedFolder == i ? 'text-light' : 'text-dark'}">{item.name}</div>
+											<div class="text-wrap p-1 {selectedFolder == i ? 'text-light' : 'text-dark'}">{item.name}</div>
 										</div>
 									{/each}
 								</div>
@@ -163,12 +164,18 @@
 								<div class="mt-2">
 									{#if photos.length > 0}
 										<div class="d-flex flex-wrap gap-2">
-											{#each photos as photo}
+											{#each photos as photo, i}
 												{#await getDownloadURL(ref(storage, photo.fullPath)) then s}
+													<!-- svelte-ignore a11y-click-events-have-key-events -->
+													<!-- svelte-ignore a11y-no-static-element-interactions -->
 													<div
 														class="d-flex align-items-start justify-content-end rounded-1 gap-1 p-1"
-														style="width:23%; background-image: url({s}); background-repeat: no-repeat; background-position: center; background-size: cover; min-height:5em;">
-														<input type="checkbox" class="form-check" />
+														style="width:31.5%; background-image: url({s}); background-repeat: no-repeat; background-position: center; background-size: cover; min-height:6.1em;"
+														on:click={() =>
+															(checkedPhotos = !checkedPhotos.includes(s)
+																? [...checkedPhotos, s]
+																: checkedPhotos.filter(v => v != s))}>
+														<input type="checkbox" class="form-check" value={s} bind:group={checkedPhotos} />
 													</div>
 												{/await}
 											{/each}
@@ -178,8 +185,19 @@
 							</div>
 						</div>
 						<div class="d-flex justify-content-end align-items-center gap-1">
-							<button class="btn btn-light text-dark" data-bs-dismiss="modal">Отмена</button>
-							<button class="btn btn-dark text-light">Добавить</button>
+							<button class="btn btn-light text-dark" data-bs-dismiss="modal" on:click={() => (checkedPhotos = [])}
+								>Отмена</button>
+							<button
+								class="btn btn-dark text-light"
+								data-bs-dismiss="modal"
+								on:click={() => {
+									if (checkedPhotos.length > 0) {
+										checkedPhotos.forEach(v => {
+											album.photos = [...album.photos, new _Photo(null, v)];
+										});
+										checkedPhotos = [];
+									}
+								}}>Добавить</button>
 						</div>
 					</div>
 				</div>
