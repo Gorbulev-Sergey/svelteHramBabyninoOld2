@@ -141,7 +141,7 @@
 			<!-- Фотографии из хранилища (модальное окно) -->
 			<div id="modalStoragePhotos" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false">
 				<div class="modal-dialog modal-dialog-centered">
-					<div class="modal-content bg-light text-dark p-3">
+					<div class="modal-content p-3">
 						<div class="d-flex justify-content-between align-items-center">
 							<h5 class="pb-0">Добавить фотографии из хранилища</h5>
 							<button class="btn btn-sm btn-light text-dark" data-bs-dismiss="modal"><i class="fa-solid fa-xmark" /></button>
