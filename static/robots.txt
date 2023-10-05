@@ -9,5 +9,5 @@ Disallow: /auth
 Disallow: /android
 Disallow: /fullscreen
 
-Host: https://www.kuksha-lesnoy.ru
-Sitemap: https://www.kuksha-lesnoy.ru/sitemap.xml
+Host: https://www.hram-babynino.ru
+Sitemap: https://www.hram-babynino.ru/sitemap.xml
