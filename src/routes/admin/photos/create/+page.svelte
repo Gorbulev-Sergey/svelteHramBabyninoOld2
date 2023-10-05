@@ -1,13 +1,12 @@
 <script>
 	// @ts-nocheck
-
-	import { goto } from '$app/navigation';
+	import PageTitleWrap from '$lib/components/PageTitleWrap.svelte';
 	import Photo from '$lib/components/photos/Photo.svelte';
+	import { goto } from '$app/navigation';
 	import { Photo as _Photo } from '$lib/models/photos/Photo';
 	import { Album } from '$lib/models/photos/Album';
-	import { db, storage } from '$lib/scripts/firebase';
 	import { push } from 'firebase/database';
-	import PageTitleWrap from '$lib/components/PageTitleWrap.svelte';
+	import { db, storage } from '$lib/scripts/firebase';
 	import { ref, getDownloadURL, listAll } from 'firebase/storage';
 	import { onMount } from 'svelte';
 
