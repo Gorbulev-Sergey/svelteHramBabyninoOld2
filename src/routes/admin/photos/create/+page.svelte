@@ -1,13 +1,38 @@
 <script>
+	// @ts-nocheck
+
 	import { goto } from '$app/navigation';
 	import Photo from '$lib/components/photos/Photo.svelte';
 	import { Photo as _Photo } from '$lib/models/photos/Photo';
 	import { Album } from '$lib/models/photos/Album';
-	import { db } from '$lib/scripts/firebase';
-	import { push, ref } from 'firebase/database';
+	import { db, storage } from '$lib/scripts/firebase';
+	import { push } from 'firebase/database';
 	import PageTitleWrap from '$lib/components/PageTitleWrap.svelte';
+	import { ref, getDownloadURL, listAll } from 'firebase/storage';
+	import { onMount } from 'svelte';
 
 	let album = new Album();
+
+	// Для работы с хранилищем
+	let folders = [];
+	let photos = [];
+	let albumsFolder = '/Photos';
+	let albumsRef = ref(storage, `${albumsFolder}`);
+	let selectedFolder = 0;
+	let getFolders = () => listAll(ref(storage, albumsRef)).then(result => (folders = result.prefixes));
+	let getPhotos = () => {
+		if (folders.length > 0) {
+			listAll(ref(storage, ref(storage, folders[selectedFolder].fullPath))).then(s => {
+				photos = s.items.filter(p => p.name != 'empty');
+			});
+		}
+	};
+
+	onMount(() => {
+		getFolders().then(() => {
+			getPhotos();
+		});
+	});
 </script>
 
 <PageTitleWrap title="Создать фотоальбом">
@@ -109,10 +134,49 @@
 				<div class="modal-dialog modal-dialog-centered">
 					<div class="modal-content p-3">
 						<div class="d-flex justify-content-between align-items-center">
-							<h5 class="mb-0">Вставить фотографии из хранилища</h5>
+							<h5 class="pb-0">Добавить фотографии из хранилища</h5>
 							<button class="btn btn-sm btn-light text-dark" data-bs-dismiss="modal"><i class="fa-solid fa-xmark" /></button>
 						</div>
-						<div class="my-2">...</div>
+						<div class="my-3">
+							<!-- Папки -->
+							<div class="d-flex gap-2 mb-3">
+								<b class="my-1">Папки:</b>
+								<div class=" flex-grow-1 d-flex">
+									{#each folders as item, i}
+										<!-- svelte-ignore a11y-click-events-have-key-events -->
+										<!-- svelte-ignore a11y-no-static-element-interactions -->
+										<div
+											class="d-flex align-items-center {selectedFolder == i ? 'bg-dark text-light' : 'bg-light'} px-2 rounded-1"
+											style="cursor:pointer"
+											on:click={() => {
+												selectedFolder = i;
+												getPhotos();
+											}}>
+											<div class="p-1 {selectedFolder == i ? 'text-light' : 'text-dark'}">{item.name}</div>
+										</div>
+									{/each}
+								</div>
+							</div>
+							<!-- Фотографии из папки -->
+							<div>
+								<b>Фотографии:</b>
+								<div class="mt-2">
+									{#if photos.length > 0}
+										<div class="d-flex flex-wrap gap-2">
+											{#each photos as photo}
+												{#await getDownloadURL(ref(storage, photo.fullPath)) then s}
+													<div
+														class="d-flex align-items-start justify-content-end rounded-1 gap-1 p-1"
+														style="width:23%; background-image: url({s}); background-repeat: no-repeat; background-position: center; background-size: cover; min-height:5em;">
+														<input type="checkbox" class="form-check" />
+													</div>
+												{/await}
+											{/each}
+										</div>
+									{/if}
+								</div>
+							</div>
+						</div>
 						<div class="d-flex justify-content-end align-items-center gap-1">
 							<button class="btn btn-light text-dark" data-bs-dismiss="modal">Отмена</button>
 							<button class="btn btn-dark text-light">Добавить</button>
