@@ -2,7 +2,7 @@
 	// @ts-nocheck
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { isAdmin, theme } from '$lib/scripts/writableData';
+	import { theme } from '$lib/scripts/writableData';
 	import After from '$lib/components/Breakpoint/After.svelte';
 	import Before from '$lib/components/Breakpoint/Before.svelte';
 	import IsAuth from '$lib/components/IsAuth.svelte';
@@ -45,7 +45,7 @@
 							href={item.url}>{item.title}</a>
 					</div>
 				{/each}
-				{#if $isAdmin}
+				<IsAuth>
 					{#each routesRight as item}
 						<div class="bg-light text-dark">
 							<button
@@ -59,7 +59,7 @@
 							</button>
 						</div>
 					{/each}
-				{/if}
+				</IsAuth>
 			</div>
 		</div>
 	</Before>
@@ -84,13 +84,13 @@
 					{/each}
 				</div>
 			</div>
-			{#if $isAdmin}
+			<IsAuth>
 				<div>
 					{#each routesRight as item}
 						<a class="btn btn-dark text-light border-0 me-1" href={item.url}>{item.title}</a>
 					{/each}
 				</div>
-			{/if}
+			</IsAuth>
 			<button class="btn btn-light bg-light text-dark bg-transparent border-0" on:click={async () => changeTheme()}
 				><i class="fa-regular fa-sun" /></button>
 		</div>
