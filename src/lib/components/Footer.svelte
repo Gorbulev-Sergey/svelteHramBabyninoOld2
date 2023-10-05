@@ -1,31 +1,27 @@
 <script>
 	import { goto } from '$app/navigation';
-	import IsAuth from '$lib/components/IsAuth.svelte';
 	import { auth } from '$lib/scripts/firebase';
+	import { isAdmin } from '$lib/scripts/writableData';
 </script>
 
 <footer class="bg-light text-dark no-print">
 	<div class="p-3">
 		<div class="d-flex flex-column justify-content-center align-items-center">
 			<div class="pt-2 text-center">
-				<IsAuth>
-					<i
-						class="fa-solid fa-copyright me-1"
-						style="cursor: pointer;"
-						title="Выйти из аккаунта"
-						on:click={() => {
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<!-- svelte-ignore a11y-no-static-element-interactions -->
+				<i
+					class="fa-solid fa-copyright me-1"
+					style="cursor: pointer;"
+					title={$isAdmin ? 'Выйти из аккаунта' : 'Вход для администраторов'}
+					on:click={() => {
+						if ($isAdmin) {
 							auth.signOut();
 							goto('/');
-						}} />
-					<i
-						slot="notAuth"
-						class="fa-solid fa-copyright me-1"
-						style="cursor: pointer;"
-						title="Вход для администраторов"
-						on:click={() => {
+						} else {
 							goto('/auth/login');
-						}} />
-				</IsAuth>
+						}
+					}} />
 				<span>Храм "Вознесения Господня", посёлок Бабынино, Калужская область, {new Date(Date.now()).getFullYear()} год</span>
 			</div>
 			<div class="pb-1 text-center">

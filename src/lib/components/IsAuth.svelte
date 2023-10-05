@@ -1,5 +1,6 @@
 <script>
 	import { auth, db } from '$lib/scripts/firebase';
+	import { isAdmin } from '$lib/scripts/writableData';
 	import { onAuthStateChanged } from 'firebase/auth';
 	import { onValue, ref } from 'firebase/database';
 	import { onMount } from 'svelte';
@@ -13,15 +14,20 @@
 	onMount(async () => {
 		onAuthStateChanged(auth, user => {
 			if (user) currentUser = user;
-		});
-		onValue(ref(db, '/admins'), r => {
-			if (r.exists()) admins = r.val();
+
+			onValue(ref(db, '/admins'), r => {
+				if (r.exists()) admins = r.val();
+
+				$isAdmin = currentUser && admins.includes(currentUser.uid);
+			});
 		});
 	});
 </script>
 
-{#if currentUser && admins.includes(currentUser.uid)}
+<slot />
+
+<!-- {#if currentUser && admins.includes(currentUser.uid)}
 	<slot />
 {:else}
 	<slot name="notAuth" />
-{/if}
+{/if} -->

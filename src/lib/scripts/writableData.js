@@ -31,3 +31,6 @@ onValue(ref(db, '/tags'), s => {
 
 // Пользователь, который вошёл в систему
 export let userSigned = writable({});
+
+// В систему вошёл администратор?
+export let isAdmin = writable(false);

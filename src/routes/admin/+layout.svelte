@@ -1,7 +1,10 @@
 <script>
+	import { goto } from '$app/navigation';
 	import Footer from '$lib/components/Footer.svelte';
 	import IsAuth from '$lib/components/IsAuth.svelte';
 	import Navigation from '$lib/components/Navigation.svelte';
+	import { isAdmin } from '$lib/scripts/writableData';
+	import { onMount } from 'svelte';
 
 	let routesLeft = [
 		{
@@ -35,6 +38,10 @@
 			title: 'Сайт'
 		}
 	];
+
+	onMount(() => {
+		if (!$isAdmin) goto('/');
+	});
 </script>
 
 <IsAuth>
