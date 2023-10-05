@@ -1,6 +1,6 @@
 <script>
+	import { isAdmin } from '$lib/scripts/writableData';
 	import { goto } from '$app/navigation';
-	import IsAuth from '$lib/components/IsAuth.svelte';
 	import { auth } from '$lib/scripts/firebase';
 </script>
 
@@ -8,26 +8,19 @@
 	<div class="p-3">
 		<div class="d-flex flex-column justify-content-center align-items-center">
 			<div class="pt-2 text-center">
-				<IsAuth>
-					<i
-						class="fa-solid fa-copyright me-1"
-						style="cursor: pointer;"
-						title="Выйти из аккаунта"
-						on:click={() => {
+				<i
+					class="fa-solid fa-copyright me-1"
+					style="cursor: pointer;"
+					title={$isAdmin ? 'Выйти из аккаунта' : 'Вход для администраторов'}
+					on:click={() => {
+						if ($isAdmin) {
 							auth.signOut();
 							goto('/');
-						}} />
-					<i
-						slot="notAuth"
-						class="fa-solid fa-copyright me-1"
-						style="cursor: pointer;"
-						title="Вход для администраторов"
-						on:click={() => {
+						} else {
 							goto('/auth/login');
-						}} />
-				</IsAuth>
-				<span
-					>Храм великомученика Кукши Печерского, посёлок Лесной, Калужская область, {new Date(Date.now()).getFullYear()} год</span>
+						}
+					}} />
+				<span>Храм "Вознесения Господня", посёлок Бабынино, Калужская область, {new Date(Date.now()).getFullYear()} год</span>
 			</div>
 			<div class="pb-1 text-center">
 				Контакты:
