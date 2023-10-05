@@ -4,12 +4,12 @@
 
 	beforeUpdate(async () => {
 		if (!localStorage.getItem('theme')) {
-			localStorage.setItem('theme', 'light');
+			localStorage.setItem('theme', 'dark');
 		}
-		$theme = localStorage.getItem('theme') || 'light';
+		$theme = localStorage.getItem('theme') || 'dark';
 	});
 </script>
 
 <svelte:head>
-	<link href="/bootstrap.{$theme == '' ? 'light' : $theme}.min.css" rel="stylesheet" />
+	<link href="/bootstrap.{$theme == '' ? 'dark' : $theme}.min.css" rel="stylesheet" />
 </svelte:head>
