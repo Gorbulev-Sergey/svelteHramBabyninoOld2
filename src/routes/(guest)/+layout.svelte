@@ -37,7 +37,7 @@
 	];
 </script>
 
-<Navigation title="<span class='text-success'>Храм</span> КУКШИ ПЕЧЕРСКОГО" {routesLeft} {routesRight} />
+<Navigation title="Храм <span class='text-danger'>КУКШИ ПЕЧЕРСКОГО</span>" {routesLeft} {routesRight} />
 <div class="container my-4 py-1" style=" min-height:90vh;">
 	<slot />
 </div>
