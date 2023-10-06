@@ -1,10 +1,11 @@
 <script>
-	export let title = 'Храм Кукши Печерского';
-	export let description = 'Храм Кукши Печерского';
-	export let author = '';
-	export let copyright = 'Храм Кукши Печерского';
-	export let address = '';
-	export let keywords = 'Храм Кукши Печерского';
+	export let title = 'Храм Вознесения Господня';
+	export let description = 'Храм Вознесения Господня пос. Бабынино';
+	export let author = 'Сергей Горбулёв';
+	export let copyright = 'Храм Вознесения Господня пос. Бабынино';
+	export let address = '249210, Калужская обл., пос. Бабынино, Базарная пл., 1';
+	export let keywords =
+		'храм бабынино, бабынино храм, бабынино храм Вознесения, храм Вознесения Господня, церковь бабынино, храм поселок бабынино, калуга храм, калужская область храм, бабынинский район храм, Вознесение Господне';
 </script>
 
 <svelte:head>
