@@ -1,7 +1,7 @@
 <script>
+	import { isAdmin } from '$lib/scripts/writableData';
 	import { goto } from '$app/navigation';
 	import { auth } from '$lib/scripts/firebase';
-	import { isAdmin } from '$lib/scripts/writableData';
 </script>
 
 <footer class="bg-light text-dark no-print">
