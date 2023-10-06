@@ -1,44 +1,23 @@
 <script>
-	// @ts-nocheck
-
-	import PageTitleWrap from '$lib/components/PageTitleWrap.svelte';
-	import Photo from '$lib/components/photos/Photo.svelte';
-	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
+	import Photo from '$lib/components/photos/Photo.svelte';
 	import { Photo as _Photo } from '$lib/models/photos/Photo';
 	import { Album } from '$lib/models/photos/Album';
-	import { db, storage } from '$lib/scripts/firebase';
+	import { db } from '$lib/scripts/firebase';
 	import { onValue, push, ref, update } from 'firebase/database';
-	import { ref as refStorage, getDownloadURL, listAll } from 'firebase/storage';
 	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
+	import PageTitleWrap from '$lib/components/PageTitleWrap.svelte';
 
 	let album = new Album();
-
-	// Для работы с хранилищем
-	let folders = [];
-	let photos = [];
-	let albumsFolder = '/Photos';
-	let albumsRef = refStorage(storage, `${albumsFolder}`);
-	let selectedFolder = 0;
-	let checkedPhotos = [];
-	let getFolders = () => listAll(refStorage(storage, albumsRef)).then(result => (folders = result.prefixes));
-	let getPhotos = () => {
-		if (folders.length > 0) {
-			listAll(refStorage(storage, refStorage(storage, folders[selectedFolder].fullPath))).then(s => {
-				photos = s.items.filter(p => p.name != 'empty');
-			});
-		}
-	};
-
 	onMount(async () => {
 		onValue(ref(db, `/photos/${$page.params.uid}`), s => {
 			if (s.exists()) {
 				album = s.val();
 				if (!album.photos) album.photos = new Array();
-
-				getFolders().then(() => {
-					getPhotos();
-				});
+				// if (!album.date) {
+				// 	album.date = new Date(Date.now()).toDateString();
+				// }
 			}
 		});
 	});
@@ -66,8 +45,7 @@
 	</div>
 
 	<div class="tab-content">
-		<!-- Вкладка обложка -->
-		<div id="cover" class="tab-pane active show">
+		<div class="tab-pane active show" id="cover">
 			<div class="row">
 				<div class="col-md-8">
 					<input class="form-control border-primary mb-3 bg-light text-dark" placeholder="заголовок" bind:value={album.title} />
@@ -93,9 +71,8 @@
 				</div>
 			</div>
 		</div>
-		<!-- Вкладка содержимое -->
-		<div id="content" class="tab-pane">
-			<div class="d-flex flex-wrap gap-1 mb-3">
+		<div class="tab-pane" id="content">
+			<div class="mb-3">
 				<button class="btn btn-sm btn-dark me-1" on:click={() => (album.photos = [...album.photos, new _Photo()])}
 					><i class="fa-solid fa-plus" /> 1 фото
 				</button>
@@ -117,9 +94,6 @@
 					}}
 					><i class="fa-solid fa-plus" /> 10 фото
 				</button>
-				<button class="btn btn-sm btn-dark me-1" data-bs-toggle="modal" data-bs-target="#modalStoragePhotos">
-					<i class="fa-solid fa-cloud-arrow-down me-1" />из хранилища
-				</button>
 			</div>
 			<div class="row row-cols-1 row-cols-md-3 g-3">
 				{#each album.photos as photo, i}
@@ -137,78 +111,6 @@
 							onDelete={() => (album.photos = album.photos.filter(p => p != photo))} />
 					</div>
 				{/each}
-			</div>
-			<!-- Фотографии из хранилища (модальное окно) -->
-			<div id="modalStoragePhotos" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false">
-				<div class="modal-dialog modal-dialog-centered">
-					<div class="modal-content p-3">
-						<div class="d-flex justify-content-between align-items-center">
-							<h5 class="pb-0">Добавить фотографии из хранилища</h5>
-							<button class="btn btn-sm btn-light text-dark" data-bs-dismiss="modal"><i class="fa-solid fa-xmark" /></button>
-						</div>
-						<div class="my-3">
-							<!-- Папки -->
-							<div class="d-flex gap-2 mb-3">
-								<b class="my-1">Папки:</b>
-								<div class="flex-grow-1 d-flex flex-wrap gap-1">
-									{#each folders as item, i}
-										<!-- svelte-ignore a11y-click-events-have-key-events -->
-										<!-- svelte-ignore a11y-no-static-element-interactions -->
-										<div
-											class="d-flex align-items-top {selectedFolder == i ? 'bg-dark text-light' : 'bg-light'} px-2 rounded-1"
-											style="cursor:pointer"
-											on:click={() => {
-												selectedFolder = i;
-												getPhotos();
-											}}>
-											<div class="text-wrap p-1 {selectedFolder == i ? 'text-light' : 'text-dark'}">{item.name}</div>
-										</div>
-									{/each}
-								</div>
-							</div>
-							<!-- Фотографии из папки -->
-							<div>
-								<b>Фотографии:</b>
-								<div class="mt-2">
-									{#if photos.length > 0}
-										<div class="d-flex flex-wrap gap-2">
-											{#each photos as photo, i}
-												{#await getDownloadURL(refStorage(storage, photo.fullPath)) then s}
-													<!-- svelte-ignore a11y-click-events-have-key-events -->
-													<!-- svelte-ignore a11y-no-static-element-interactions -->
-													<div
-														class="d-flex align-items-start justify-content-end rounded-1 gap-1 p-1"
-														style="width:31.5%; background-image: url({s}); background-repeat: no-repeat; background-position: center; background-size: cover; min-height:6.1em;"
-														on:click={() =>
-															(checkedPhotos = !checkedPhotos.includes(s)
-																? [...checkedPhotos, s]
-																: checkedPhotos.filter(v => v != s))}>
-														<input type="checkbox" class="form-check" value={s} bind:group={checkedPhotos} />
-													</div>
-												{/await}
-											{/each}
-										</div>
-									{/if}
-								</div>
-							</div>
-						</div>
-						<div class="d-flex justify-content-end align-items-center gap-1">
-							<button class="btn btn-light text-dark" data-bs-dismiss="modal" on:click={() => (checkedPhotos = [])}
-								>Отмена</button>
-							<button
-								class="btn btn-dark text-light"
-								data-bs-dismiss="modal"
-								on:click={() => {
-									if (checkedPhotos.length > 0) {
-										checkedPhotos.forEach(v => {
-											album.photos = [...album.photos, new _Photo(null, v)];
-										});
-										checkedPhotos = [];
-									}
-								}}>Добавить</button>
-						</div>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
